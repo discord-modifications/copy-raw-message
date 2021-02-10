@@ -12,7 +12,7 @@ module.exports = class CopyRawMessage extends Plugin {
 
          if (!message || !message.content) return res;
 
-         res.props.children.splice(4, 0,
+         res.props.children.splice(3, 0,
             React.createElement(MenuItem, {
                label: 'Copy Message',
                id: 'copy-raw-message',
