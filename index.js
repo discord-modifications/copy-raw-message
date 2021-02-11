@@ -5,24 +5,26 @@ const { MenuItem } = getModule(['MenuGroup', 'MenuItem'], false);
 
 module.exports = class CopyRawMessage extends Plugin {
    async startPlugin() {
-      const MessageContextMenu = getModule(m => m.default && m.default.displayName === 'MessageContextMenu', false);
+      const ContextMenu = getModule(m => {
+         return m.default && m.default.displayName === 'MessageContextMenu';
+      }, false);
 
-      inject('copy-raw-message', MessageContextMenu, 'default', ([props], res) => {
+      inject('copy-raw-message', ContextMenu, 'default', ([props], res) => {
          const { message } = props;
 
-         if (!message || !message.content) return res;
-
-         res.props.children.splice(3, 0,
-            React.createElement(MenuItem, {
-               label: 'Copy Message',
-               id: 'copy-raw-message',
-               action: () => DiscordNative.clipboard.copy(message.content)
-            })
-         );
+         if (message && message.content) {
+            res.props.children.splice(3, 0,
+               React.createElement(MenuItem, {
+                  label: 'Copy Message',
+                  id: 'copy-raw-message',
+                  action: () => DiscordNative.clipboard.copy(message.content)
+               })
+            );
+         }
 
          return res;
       });
-      MessageContextMenu.default.displayName = 'MessageContextMenu';
+      ContextMenu.default.displayName = 'MessageContextMenu';
    }
 
    pluginWillUnload() {
