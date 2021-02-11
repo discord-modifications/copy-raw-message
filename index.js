@@ -17,7 +17,7 @@ module.exports = class CopyRawMessage extends Plugin {
             res.props.children.splice(3, 0,
                React.createElement(MenuItem, {
                   label: 'Copy Message',
-                  id: 'copy',
+                  id: 'copy-raw',
                   action: () => clipboard.copy(message.content)
                })
             );
