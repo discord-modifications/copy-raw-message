@@ -1,7 +1,8 @@
 const { inject, uninject } = require('powercord/injector');
 const { getModule, React } = require('powercord/webpack');
+const { MenuItem } = getModule(['MenuItem'], false);
 const { Plugin } = require('powercord/entities');
-const { MenuItem } = getModule(['MenuGroup', 'MenuItem'], false);
+const { clipboard } = DiscordNative;
 
 module.exports = class CopyRawMessage extends Plugin {
    async startPlugin() {
@@ -17,7 +18,7 @@ module.exports = class CopyRawMessage extends Plugin {
                React.createElement(MenuItem, {
                   label: 'Copy Message',
                   id: 'copy-raw-message',
-                  action: () => DiscordNative.clipboard.copy(message.content)
+                  action: () => clipboard.copy(message.content)
                })
             );
          }
